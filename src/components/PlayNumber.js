@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayNumber = ({ number, status }) => {
+const PlayNumber = ({ number, status, onClickk }) => {
 
     const colors = {
         available: 'lightgray',
@@ -13,7 +13,7 @@ const PlayNumber = ({ number, status }) => {
         <button
             className="number"
             style={{ backgroundColor: colors[status] }}
-            onClick={() => console.log('Num', number)}
+            onClick={() => onClickk(number, status)}
         >
             {number}
         </button>

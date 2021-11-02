@@ -10,6 +10,7 @@ const StarMatch = () => {
     const [candidateNums, setCandidateNums] = useState([])
 
     const candidatesAreWrong = utils.sum(candidateNums) > stars
+    // const gameIsDone = availableNums.length === 0
 
     const numberStatus = (number) => {
         if (!availableNums.includes(number)) {
@@ -21,6 +22,29 @@ const StarMatch = () => {
         return 'available'
     }
 
+    const onNumberClick = (number, currentStatus) => {
+        if (currentStatus === 'used') {
+            return
+        }
+
+        const newCandidateNums =
+            currentStatus === 'available'
+                ? candidateNums.concat(number)
+                : candidateNums.filter(cn => cn !== number);
+
+        if (utils.sum(newCandidateNums) !== stars) {
+            setCandidateNums(newCandidateNums)
+        } else {
+
+            const newAvailableNums = availableNums.filter(
+                n => !newCandidateNums.includes(n)
+            )
+
+            setStars(utils.randomSumIn(newAvailableNums, 9))
+            setAvailableNums(newAvailableNums)
+            setCandidateNums([])
+        }
+    }
 
     return (
         <div className="game">
@@ -31,8 +55,12 @@ const StarMatch = () => {
                 {/* stars */}
                 <div className="left">
                     <StarsDisplay
+                        // {gameIsDone ? (
+                        //     <PlayAgain />
+                        // )}
                         stars={stars}
-                        utils={utils} />
+                        utils={utils}
+                    />
                 </div>
                 {/* nums */}
                 <div className="right">
@@ -41,6 +69,7 @@ const StarMatch = () => {
                             key={number}
                             status={numberStatus(number)}
                             number={number}
+                            onClickk={onNumberClick}
                         />
                     )}
                 </div>
