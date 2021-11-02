@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./StarMatch.css"
 import PlayNumber from './PlayNumber'
+import StarsDisplay from './StarsDisplay';
 
 const StarMatch = () => {
 
@@ -14,10 +15,7 @@ const StarMatch = () => {
             <div className="body">
                 {/* stars */}
                 <div className="left">
-                    {utils.range(1, stars).map(starId =>
-                        <div key={starId} className="star"></div>
-                    )}
-
+                    <StarsDisplay stars={stars} utils={utils} />
                 </div>
                 {/* nums */}
                 <div className="right">
